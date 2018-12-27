@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Blog_final_Asp.Models;
 
@@ -50,6 +51,7 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.Password = Crypto.SHA256(user.Password); // hash du mot de passe
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -82,6 +84,7 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.Password = Crypto.SHA256(user.Password); // hash du mot de passe
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

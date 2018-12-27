@@ -18,7 +18,8 @@ namespace Blog_final_Asp.Models
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "L'adresse mail entrée n'est pas valide")]
         public string Mail { get; set; }
         [Required(ErrorMessage = "Veuillez entrer un mot de passe")]
-        [RegularExpression(@"^[a-zA-Z0-9]{8,16}$", ErrorMessage ="Le mot de passe doit contenir entre 8 et 16 caractères de type a-z, A-Z ou 0-9")]
+        // Regex à déplacer dans le ViewModel
+        //[RegularExpression(@"^[a-zA-Z0-9]{8,16}$", ErrorMessage ="Le mot de passe doit contenir entre 8 et 16 caractères de type a-z, A-Z ou 0-9")] // Je ne peux pas utiliser directement le regex vu qu'il renverra faux après le hash
         [Display(Name = "Mot de passe")]
         public string Password { get; set; }
         [Required]
