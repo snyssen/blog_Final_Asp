@@ -132,6 +132,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
+    <Compile Include="Areas\Account\Controllers\LoginController.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\AutorsController.cs" />
     <Compile Include="Areas\Administration\Controllers\CommentsController.cs" />
@@ -234,6 +236,9 @@
     <Content Include="Areas\Administration\Views\Comments\Details.cshtml" />
     <Content Include="Areas\Administration\Views\Comments\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Comments\Index.cshtml" />
+    <Content Include="Areas\Account\Views\web.config" />
+    <Content Include="Areas\Account\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Account\Views\Login\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -263,6 +268,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Account\Models\" />
+    <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Administration\Models\" />
   </ItemGroup>
   <ItemGroup>
