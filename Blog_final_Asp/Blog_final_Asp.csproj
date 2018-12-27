@@ -132,6 +132,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
+    <Compile Include="Areas\Administration\Controllers\AutorsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\CommentsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Administration\Controllers\PostsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -204,6 +210,30 @@
     <Content Include="Content\materialize\fonts\roboto\Roboto-Bold.woff" />
     <Content Include="Content\materialize\fonts\roboto\Roboto-Bold.ttf" />
     <Content Include="Content\materialize\fonts\roboto\Roboto-Bold.eot" />
+    <Content Include="Areas\Administration\Views\web.config" />
+    <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Administration\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Users\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Users\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Administration\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Posts\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Posts\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\Posts\Details.cshtml" />
+    <Content Include="Areas\Administration\Views\Posts\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\Posts\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Autors\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Autors\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\Autors\Details.cshtml" />
+    <Content Include="Areas\Administration\Views\Autors\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\Autors\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Comments\Create.cshtml" />
+    <Content Include="Areas\Administration\Views\Comments\Delete.cshtml" />
+    <Content Include="Areas\Administration\Views\Comments\Details.cshtml" />
+    <Content Include="Areas\Administration\Views\Comments\Edit.cshtml" />
+    <Content Include="Areas\Administration\Views\Comments\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -233,6 +263,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Administration\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
