@@ -110,9 +110,13 @@ namespace Blog_final_Asp.Models
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Récupère les posts TRIES PAR DATE D'AJOUT
+        /// </summary>
+        /// <returns></returns>
         public List<Post> GetPosts()
         {
-            throw new NotImplementedException();
+            return db.Posts.OrderByDescending(post => post.Date_posted).ToList();
         }
 
         public Post GetPostTitle(string Title)

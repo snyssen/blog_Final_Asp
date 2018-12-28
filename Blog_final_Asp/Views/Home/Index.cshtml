@@ -1,7 +1,38 @@
-﻿
+﻿@using Blog_final_Asp.Models
+@model Blog_final_Asp.ViewModels.HomeViewModel
 @{
-    ViewBag.Title = "Accueil";
+	ViewBag.Title = "Accueil";
 }
 
-<h2>Index</h2>
+<h3>Historique</h3>
 
+@foreach (Post post in Model.Posts)
+{
+	<!-- Plus tard, utiliser des cards -> https://materializecss.com/cards.html -->
+	<div>
+		<br />
+		<hr />
+		<br />
+		<h4>@Html.ActionLink(post.Title, "ID", "Post", post.IDpost)</h4>
+		<p style="font-size:x-small">
+			Ecrit le @post.Date_posted par [WIP]
+			@if (post.Date_modified != null)
+			{
+				<br />
+				<span>Modifié pour la dernière fois le @post.Date_modified</span>
+			}
+		</p>
+		<p class="truncate">
+			@post.Body
+		</p>
+	</div>
+}
+
+@section scripts 
+	{
+	<script>
+		$(document).ready(function () {
+
+		});
+	</script>
+	}
