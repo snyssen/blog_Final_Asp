@@ -10,7 +10,7 @@
 		Vous êtes déjà authentifié avec le login :
 		@Model.User.Login
 	</h3>
-	<p style="font-size:small;">Si vous avez été redirigé vers cette page-ci, il est probable que vous ne disposiez pas des droits à l'accès du contenu demandé.</p>
+	<p style="font-size:small;">Si vous avez été redirigé vers cette page-ci, il est probable que vous ne disposiez pas des droits à l'accès au contenu demandé.</p>
 	<br />
 	@Html.ActionLink("Voulez-vous vous déconnecter ?", "Disconnect")
 }
@@ -21,15 +21,17 @@ else
 	</p>
 	using (Html.BeginForm())
 	{
+		@Html.AntiForgeryToken()
+
 		<div>
 			@Html.LabelFor(model => model.User.Login)
 			@Html.TextBoxFor(model => model.User.Login)
-			@Html.ValidationMessageFor(model => model.User.Login, "", new { @class = "text-danger" })
+			@Html.ValidationMessageFor(model => model.User.Login, "", new { @class = "red-text text-accent-4" })
 		</div>
 		<div>
 			@Html.LabelFor(model => model.User.Password)
 			@Html.PasswordFor(model => model.User.Password)
-			@Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
+			@Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "red-text text-accent-4" })
 		</div>
 		<button class="btn waves-effect waves-light light-blue" type="submit" name="action">
 			Confirmer

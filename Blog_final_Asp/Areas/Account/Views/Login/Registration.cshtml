@@ -1,0 +1,50 @@
+﻿@model Blog_final_Asp.Areas.Account.ViewModels.RegistrationViewModel
+@{
+	ViewBag.Title = "Inscription";
+}
+
+@if (Model.Authenticated)
+{
+	<h3>
+		Vous êtes déjà authentifié avec le login :
+		@Model.Login
+	</h3>
+	<p style="font-size:small;">Déconnectez-vous pour créer un nouveau compte.</p>
+	<br />
+	@Html.ActionLink("Voulez-vous vous déconnecter ?", "Disconnect")
+}
+else
+{
+	using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+
+		<div>
+			@Html.LabelFor(model => model.Login)
+			@Html.TextBoxFor(model => model.Login)
+			@Html.ValidationMessageFor(model => model.Login, "", new { @class = "red-text text-accent-4" })
+		</div>
+		<div>
+			@Html.LabelFor(model => model.Mail)
+			@Html.TextBoxFor(model => model.Mail)
+			@Html.ValidationMessageFor(model => model.Mail, "", new { @class = "red-text text-accent-4" })
+		</div>
+		<div>
+			@Html.LabelFor(model => model.Password)
+			@Html.PasswordFor(model => model.Password)
+			@Html.ValidationMessageFor(model => model.Password, "", new { @class = "red-text text-accent-4" })
+		</div>
+		<div>
+			@Html.LabelFor(model => model.PasswordConf)
+			@Html.PasswordFor(model => model.PasswordConf)
+			@Html.ValidationMessageFor(model => model.PasswordConf, "", new { @class = "red-text text-accent-4" })
+		</div>
+		<button class="btn waves-effect waves-light light-blue" type="submit" name="action">
+			Confirmer
+			<i class="material-icons right">send</i>
+		</button>
+		<br />
+		<br />
+		@Html.ActionLink("Vous disposez déjà d'un compte ?", "Index")
+	}
+}

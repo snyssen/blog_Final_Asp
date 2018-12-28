@@ -135,6 +135,7 @@
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
     <Compile Include="Areas\Account\Controllers\LoginController.cs" />
     <Compile Include="Areas\Account\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Areas\Account\ViewModels\RegistrationViewModel.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\Access_lvlController.cs" />
     <Compile Include="Areas\Administration\Controllers\AutorsController.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Models\EFDBcontext.cs" />
     <Compile Include="Models\IDAL.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\ProfilePicGenerator.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -264,6 +266,7 @@
     <Content Include="Areas\Administration\Views\Comments\Details.cshtml" />
     <Content Include="Areas\Administration\Views\Comments\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Comments\Index.cshtml" />
+    <Content Include="Areas\Account\Views\Login\Registration.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\init.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
