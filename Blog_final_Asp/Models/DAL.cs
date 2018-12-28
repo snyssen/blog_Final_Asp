@@ -11,6 +11,23 @@ namespace Blog_final_Asp.Models
         private EFDBcontext db;
 
         public DAL() { db = new EFDBcontext(); }
+
+        public void AddAutor(int IDuser, int IDpost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddComment(string Title, string Body, DateTime date_posted, int IDuser, int IDpost, int? IDcomment = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddPost(string Title, string Body, DateTime date_posted, string Picture = null, DateTime ? date_modified = null)
+        {
+            db.Posts.Add(new Post { Title = Title, Body = Body, Date_posted = date_posted, Date_modified = date_modified, Picture = Picture });
+            db.SaveChanges();
+        }
+
         public void AddUser(string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic)
         {
             db.Users.Add(new User { Login = Login, Mail = Mail, Password = Password, IDaccess_lvl = IDaccess_lvl, Profile_pic = Profile_pic });
@@ -31,6 +48,76 @@ namespace Blog_final_Asp.Models
         public Access_lvl GetAccess_lvl(int ID)
         {
             return db.Access_lvls.FirstOrDefault(acc => acc.IDaccess_lvl == ID);
+        }
+
+        public Autor GetAutor(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Autor GetAutor(string IDstr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Autor> GetAutors()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Autor> GetAutorsPost(int IDpost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Autor> GetAutorsPost(string IDpoststr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Comment GetComment(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Comment GetComment(string IDstr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Comment> GetComments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Comment> GetCommentsPost(int IDpost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Comment> GetCommentsPost(string IDpoststr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Post GetPost(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Post GetPost(string IDstr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Post> GetPosts()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Post GetPostTitle(string Title)
+        {
+            throw new NotImplementedException();
         }
 
         public User GetUser(int ID)

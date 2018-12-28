@@ -146,6 +146,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Filters\AjaxFilterAttribute.cs" />
+    <Compile Include="Filters\FileExtensionsAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -302,6 +303,7 @@
     <Folder Include="Areas\Account\Models\" />
     <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Administration\Models\" />
+    <Folder Include="Images\Posts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

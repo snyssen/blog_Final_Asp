@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Blog_final_Asp.Models;
 using Blog_final_Asp.ViewModels;
 
 namespace Blog_final_Asp.Controllers
@@ -19,8 +20,23 @@ namespace Blog_final_Asp.Controllers
 
         [Authorize(Roles = ("Admin,Moderateur,Auteur"))]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(PostIndexViewModel vm)
         {
+            if (ModelState.IsValid)
+            {
+                IDAL dal = new DAL();
+                if (vm.Picture != null)
+                {
+                    string FileName = System.IO.Path.GetFileName(vm.Picture.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/Images/Posts"), FileName);
+                    vm.Picture.SaveAs(path);
+                    dal.AddPost(vm.Title, vm.Body, DateTime.Now, path);
+                }
+                else
+                    dal.AddPost(vm.Title, vm.Body, DateTime.Now);
+                return Redirect("/");
+            }
             return View(vm);
         }
 

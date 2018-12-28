@@ -16,7 +16,7 @@ namespace Blog_final_Asp.ViewModels
         [Display(Name = "Corps")]
         public string Body { get; set; }
         [Display(Name = "Photo de couverture (optionnelle)")]
-        [FileExtensions(Extensions = "jpg,png,gif", ErrorMessage = "Veuillez entrer une image au format .jpg, .png ou .gif")]
-        public HttpPostedFileBase Picture { get; set; }
+        [Blog_final_Asp.Filters.FileExtensions("jpg,png,gif", ErrorMessage = "Veuillez entrer une image au format .jpg, .png ou .gif")]
+        public HttpPostedFile Picture { get; set; }
     }
 }

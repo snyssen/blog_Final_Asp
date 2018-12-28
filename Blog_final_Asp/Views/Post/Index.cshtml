@@ -5,8 +5,7 @@
 
 <h2>Ajouter un nouveau billet</h2>
 
-@using (Html.BeginForm())
-{
+<form method="post" enctype="multipart/form-data">
 	@Html.AntiForgeryToken()
 
 	<div>
@@ -17,11 +16,11 @@
 	<div class="input-field">
 		@Html.LabelFor(model => model.Body)
 		@Html.TextAreaFor(model => model.Body, new { @class = "materialize-textarea" })
-		@Html.ValidationMessageFor(model => model.Title, "", new { @class = "red-text text-accent-4" })
+		@Html.ValidationMessageFor(model => model.Body, "", new { @class = "red-text text-accent-4" })
 	</div>
-	<div class="btn waves-effect waves-light light-blue">
-		@Html.LabelFor(model => model.Picture, new { @class = "white-text"})
-		@Html.TextBoxFor(model => model.Picture, new { type = "file"})
+	<div class="btn waves-effect waves-light light-blue " style="display:none">
+		@Html.LabelFor(model => model.Picture, new { @class = "white-text" })
+		@Html.TextBoxFor(model => model.Picture, new { type = "file" })
 		@Html.ValidationMessageFor(model => model.Picture, "", new { @class = "red-text text-accent-4" })
 	</div>
 	<br />
@@ -30,4 +29,4 @@
 		Confirmer
 		<i class="material-icons right">send</i>
 	</button>
-}
+</form>
