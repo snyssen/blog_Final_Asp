@@ -17,7 +17,8 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // GET: Administration/Comments
         public ActionResult Index()
         {
-            return View(db.Comments.ToList());
+            var comments = db.Comments.Include(c => c.ParentComm).Include(c => c.Post).Include(c => c.User);
+            return View(comments.ToList());
         }
 
         // GET: Administration/Comments/Details/5
@@ -38,6 +39,9 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // GET: Administration/Comments/Create
         public ActionResult Create()
         {
+            ViewBag.IDparentComm = new SelectList(db.Comments, "IDcomment", "Title");
+            ViewBag.IDpost = new SelectList(db.Posts, "IDpost", "Title");
+            ViewBag.IDuser = new SelectList(db.Users, "IDuser", "Login");
             return View();
         }
 
@@ -46,7 +50,7 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Body,Date_posted")] Comment comment)
+        public ActionResult Create([Bind(Include = "IDcomment,Title,Body,Date_posted,IDuser,IDpost,IDparentComm")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +59,9 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.IDparentComm = new SelectList(db.Comments, "IDcomment", "Title", comment.IDparentComm);
+            ViewBag.IDpost = new SelectList(db.Posts, "IDpost", "Title", comment.IDpost);
+            ViewBag.IDuser = new SelectList(db.Users, "IDuser", "Login", comment.IDuser);
             return View(comment);
         }
 
@@ -70,6 +77,9 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.IDparentComm = new SelectList(db.Comments, "IDcomment", "Title", comment.IDparentComm);
+            ViewBag.IDpost = new SelectList(db.Posts, "IDpost", "Title", comment.IDpost);
+            ViewBag.IDuser = new SelectList(db.Users, "IDuser", "Login", comment.IDuser);
             return View(comment);
         }
 
@@ -78,7 +88,7 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Body,Date_posted")] Comment comment)
+        public ActionResult Edit([Bind(Include = "IDcomment,Title,Body,Date_posted,IDuser,IDpost,IDparentComm")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +96,9 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.IDparentComm = new SelectList(db.Comments, "IDcomment", "Title", comment.IDparentComm);
+            ViewBag.IDpost = new SelectList(db.Posts, "IDpost", "Title", comment.IDpost);
+            ViewBag.IDuser = new SelectList(db.Users, "IDuser", "Login", comment.IDuser);
             return View(comment);
         }
 

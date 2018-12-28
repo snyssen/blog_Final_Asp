@@ -17,7 +17,8 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // GET: Administration/Autors
         public ActionResult Index()
         {
-            return View(db.Autors.ToList());
+            var autors = db.Autors.Include(a => a.Post).Include(a => a.User);
+            return View(autors.ToList());
         }
 
         // GET: Administration/Autors/Details/5
@@ -38,6 +39,8 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // GET: Administration/Autors/Create
         public ActionResult Create()
         {
+            ViewBag.IDpost = new SelectList(db.Posts, "IDpost", "Title");
+            ViewBag.IDuser = new SelectList(db.Users, "IDuser", "Login");
             return View();
         }
 
@@ -46,7 +49,7 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID")] Autor autor)
+        public ActionResult Create([Bind(Include = "IDautor,IDuser,IDpost")] Autor autor)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +58,8 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.IDpost = new SelectList(db.Posts, "IDpost", "Title", autor.IDpost);
+            ViewBag.IDuser = new SelectList(db.Users, "IDuser", "Login", autor.IDuser);
             return View(autor);
         }
 
@@ -70,6 +75,8 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.IDpost = new SelectList(db.Posts, "IDpost", "Title", autor.IDpost);
+            ViewBag.IDuser = new SelectList(db.Users, "IDuser", "Login", autor.IDuser);
             return View(autor);
         }
 
@@ -78,7 +85,7 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID")] Autor autor)
+        public ActionResult Edit([Bind(Include = "IDautor,IDuser,IDpost")] Autor autor)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +93,8 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.IDpost = new SelectList(db.Posts, "IDpost", "Title", autor.IDpost);
+            ViewBag.IDuser = new SelectList(db.Users, "IDuser", "Login", autor.IDuser);
             return View(autor);
         }
 

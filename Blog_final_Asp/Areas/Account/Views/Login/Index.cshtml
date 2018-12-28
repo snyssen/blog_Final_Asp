@@ -1,7 +1,42 @@
-﻿
+﻿@model Blog_final_Asp.Areas.Account.ViewModels.LoginViewModel
 @{
-    ViewBag.Title = "Signin";
+	ViewBag.Title = "Signin";
 }
 
-<h2>Connexion</h2>
 
+@if (Model.Authenticated)
+{
+	<h3>
+		Vous êtes déjà authentifié avec le login :
+		@Model.User.Login
+	</h3>
+	<p style="font-size:small;">Si vous avez été redirigé vers cette page-ci, il est probable que vous ne disposiez pas des droits à l'accès du contenu demandé.</p>
+	<br />
+	@Html.ActionLink("Voulez-vous vous déconnecter ?", "Disconnect")
+}
+else
+{
+	<p>
+		Veuillez vous authentifier :
+	</p>
+	using (Html.BeginForm())
+	{
+		<div>
+			@Html.LabelFor(model => model.User.Login)
+			@Html.TextBoxFor(model => model.User.Login)
+			@Html.ValidationMessageFor(model => model.User.Login, "", new { @class = "text-danger" })
+		</div>
+		<div>
+			@Html.LabelFor(model => model.User.Password)
+			@Html.PasswordFor(model => model.User.Password)
+			@Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
+		</div>
+		<button class="btn waves-effect waves-light light-blue" type="submit" name="action">
+			Confirmer
+			<i class="material-icons right">send</i>
+		</button>
+		<br />
+		<br />
+		@Html.ActionLink("Besoin d'un compte ?", "Registration")
+	}
+}

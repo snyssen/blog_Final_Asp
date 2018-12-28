@@ -8,10 +8,14 @@ namespace Blog_final_Asp.Models
 {
     public class Autor
     {
-        public int ID { get; set; }
+        [Key]
+        public int IDautor { get; set; }
         [Required]
-        public User IDuser { get; set; }
+        public int IDuser { get; set; }
         [Required]
-        public Post IDpost { get; set; }
+        public int IDpost { get; set; }
+
+        public virtual User User { get; set; }
+        public virtual Post Post { get; set; }
     }
 }

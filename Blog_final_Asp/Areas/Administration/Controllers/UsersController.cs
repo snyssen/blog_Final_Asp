@@ -5,7 +5,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using Blog_final_Asp.Models;
 
@@ -18,7 +17,8 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // GET: Administration/Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            var users = db.Users.Include(u => u.Access_Lvl);
+            return View(users.ToList());
         }
 
         // GET: Administration/Users/Details/5
@@ -39,6 +39,7 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // GET: Administration/Users/Create
         public ActionResult Create()
         {
+            ViewBag.IDaccess_lvl = new SelectList(db.Access_lvls, "IDaccess_lvl", "Role");
             return View();
         }
 
@@ -47,16 +48,16 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Login,Mail,Password,Access_lvl,Profile_pic")] User user)
+        public ActionResult Create([Bind(Include = "IDuser,Login,Mail,Password,IDaccess_lvl,Profile_pic")] User user)
         {
             if (ModelState.IsValid)
             {
-                user.Password = Crypto.SHA256(user.Password); // hash du mot de passe
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.IDaccess_lvl = new SelectList(db.Access_lvls, "IDaccess_lvl", "Role", user.IDaccess_lvl);
             return View(user);
         }
 
@@ -72,6 +73,7 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.IDaccess_lvl = new SelectList(db.Access_lvls, "IDaccess_lvl", "Role", user.IDaccess_lvl);
             return View(user);
         }
 
@@ -80,15 +82,15 @@ namespace Blog_final_Asp.Areas.Administration.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Login,Mail,Password,Access_lvl,Profile_pic")] User user)
+        public ActionResult Edit([Bind(Include = "IDuser,Login,Mail,Password,IDaccess_lvl,Profile_pic")] User user)
         {
             if (ModelState.IsValid)
             {
-                user.Password = Crypto.SHA256(user.Password); // hash du mot de passe
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.IDaccess_lvl = new SelectList(db.Access_lvls, "IDaccess_lvl", "Role", user.IDaccess_lvl);
             return View(user);
         }
 

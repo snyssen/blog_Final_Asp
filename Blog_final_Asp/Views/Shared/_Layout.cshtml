@@ -16,18 +16,27 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-<!-- Menu de navigation -->
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content">
+		<li><a href="#!">one</a></li>
+		<li><a href="#!">two</a></li>
+		<li class="divider"></li>
+		<li><a href="#!">three</a></li>
+	</ul>
+	<!-- Menu de navigation -->
 	<nav class="light-blue lighten-1" role="navigation">
 		<div class="nav-wrapper container">
-			<a id="logo-container" href="#" class="brand-logo">SimCity</a>
+			<a id="logo-container" href="/" class="brand-logo">SimCity</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="#">Navbar Link</a></li>
 				<li><a href="#">Another Navbar Link</a></li>
+				<!-- Dropdown Trigger -->
+				<li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
 			</ul>
 
 		</div>
 	</nav>
-<!-- Fin menu de navigation -->
+	<!-- Fin menu de navigation -->
 
 	<div class="section no-pad-bot" id="index-banner">
 		<div class="container">
@@ -35,7 +44,7 @@
 		</div>
 	</div>
 
-	
+
 	<footer class="page-footer blue">
 		<div class="container">
 			<div class="row">
@@ -66,7 +75,7 @@
 		</div>
 		<div class="footer-copyright">
 			<div class="container">
-				&copy; @System.DateTime.Now.Year - Nyssen Simon &nbsp; Design by <a class="white-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+				&copy; @System.DateTime.Now.Year - <a class="white-text text-lighten-3" href="https://snyssen.be">Nyssen Simon</a> &nbsp; | &nbsp; Design by <a class="white-text text-lighten-3" href="http://materializecss.com">Materialize</a>
 			</div>
 		</div>
 	</footer>
@@ -76,5 +85,11 @@
 	@Scripts.Render("~/Scripts/materialize/materialize.min.js")
 	@Scripts.Render("~/Scripts/init.js")
 	@RenderSection("scripts", required: false)
+
+	<script>
+		$(document).ready(function () {
+			
+		});
+	</script>
 </body>
 </html>

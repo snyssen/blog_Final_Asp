@@ -12,6 +12,15 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.ParentComm.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Post.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Login)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
@@ -26,6 +35,15 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.ParentComm.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Post.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Login)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
@@ -35,9 +53,9 @@
             @Html.DisplayFor(modelItem => item.Date_posted)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.IDcomment }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IDcomment }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IDcomment })
         </td>
     </tr>
 }

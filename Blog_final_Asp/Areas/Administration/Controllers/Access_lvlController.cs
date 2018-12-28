@@ -10,107 +10,107 @@ using Blog_final_Asp.Models;
 
 namespace Blog_final_Asp.Areas.Administration.Controllers
 {
-    public class PostsController : Controller
+    public class Access_lvlController : Controller
     {
         private EFDBcontext db = new EFDBcontext();
 
-        // GET: Administration/Posts
+        // GET: Administration/Access_lvl
         public ActionResult Index()
         {
-            return View(db.Posts.ToList());
+            return View(db.Access_lvls.ToList());
         }
 
-        // GET: Administration/Posts/Details/5
+        // GET: Administration/Access_lvl/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Find(id);
-            if (post == null)
+            Access_lvl access_lvl = db.Access_lvls.Find(id);
+            if (access_lvl == null)
             {
                 return HttpNotFound();
             }
-            return View(post);
+            return View(access_lvl);
         }
 
-        // GET: Administration/Posts/Create
+        // GET: Administration/Access_lvl/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Administration/Posts/Create
+        // POST: Administration/Access_lvl/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDpost,Title,Body,Date_posted,Date_modified,Picture")] Post post)
+        public ActionResult Create([Bind(Include = "IDaccess_lvl,Role")] Access_lvl access_lvl)
         {
             if (ModelState.IsValid)
             {
-                db.Posts.Add(post);
+                db.Access_lvls.Add(access_lvl);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(post);
+            return View(access_lvl);
         }
 
-        // GET: Administration/Posts/Edit/5
+        // GET: Administration/Access_lvl/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Find(id);
-            if (post == null)
+            Access_lvl access_lvl = db.Access_lvls.Find(id);
+            if (access_lvl == null)
             {
                 return HttpNotFound();
             }
-            return View(post);
+            return View(access_lvl);
         }
 
-        // POST: Administration/Posts/Edit/5
+        // POST: Administration/Access_lvl/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDpost,Title,Body,Date_posted,Date_modified,Picture")] Post post)
+        public ActionResult Edit([Bind(Include = "IDaccess_lvl,Role")] Access_lvl access_lvl)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(post).State = EntityState.Modified;
+                db.Entry(access_lvl).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(post);
+            return View(access_lvl);
         }
 
-        // GET: Administration/Posts/Delete/5
+        // GET: Administration/Access_lvl/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Find(id);
-            if (post == null)
+            Access_lvl access_lvl = db.Access_lvls.Find(id);
+            if (access_lvl == null)
             {
                 return HttpNotFound();
             }
-            return View(post);
+            return View(access_lvl);
         }
 
-        // POST: Administration/Posts/Delete/5
+        // POST: Administration/Access_lvl/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Post post = db.Posts.Find(id);
-            db.Posts.Remove(post);
+            Access_lvl access_lvl = db.Access_lvls.Find(id);
+            db.Access_lvls.Remove(access_lvl);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

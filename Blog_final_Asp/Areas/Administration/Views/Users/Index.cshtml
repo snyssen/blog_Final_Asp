@@ -12,6 +12,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Access_Lvl.Role)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Login)
         </th>
         <th>
@@ -19,9 +22,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Access_lvl)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Profile_pic)
@@ -32,6 +32,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Access_Lvl.Role)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Login)
         </td>
         <td>
@@ -41,15 +44,12 @@
             @Html.DisplayFor(modelItem => item.Password)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Access_lvl)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Profile_pic)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.IDuser }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IDuser }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IDuser })
         </td>
     </tr>
 }

@@ -8,7 +8,8 @@ namespace Blog_final_Asp.Models
 {
     public class User
     {
-        public int ID { get; set; }
+        [Key]
+        public int IDuser { get; set; }
         [Required(ErrorMessage = "Veuillez entrer un nom d'utilisateur")]
         [RegularExpression(@"^[a-zA-Z0-9]*$", ErrorMessage = "Le login ne peut contenir que des caractères de type a-z, A-Z ou 0-9")]
         [MaxLength(25, ErrorMessage = "Le login ne peut pas dépasser les 25 caractères")]
@@ -23,9 +24,8 @@ namespace Blog_final_Asp.Models
         [Display(Name = "Mot de passe")]
         public string Password { get; set; }
         [Required]
-        [Range(0, 3, ErrorMessage = "Le niveau d'accès doit se situer entre 0 et 3")]
         [Display(Name = "Niveau d'accès")]
-        public int Access_lvl { get; set; }
+        public int IDaccess_lvl { get; set; }
         /*
          * Rappel par rapport à l'access_lvl
          * 
@@ -40,5 +40,9 @@ namespace Blog_final_Asp.Models
         */
         [Required]
         public string Profile_pic { get; set; }
+
+        public virtual Access_lvl Access_Lvl { get; set; }
+        public virtual ICollection<Autor> Autors { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
