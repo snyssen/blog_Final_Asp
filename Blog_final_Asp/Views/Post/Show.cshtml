@@ -1,0 +1,98 @@
+﻿@using Blog_final_Asp.Models;
+@model Blog_final_Asp.ViewModels.PostShowViewModel
+@{
+	ViewBag.Title = "Billet " + Model.Post.IDpost;
+}
+
+<h2>@Model.Post.Title</h2>
+
+<!-- Infos dates et auteurs -->
+<p style="font-size:x-small">
+	Ecrit le @Model.Post.Date_posted par @Model.Writers[0].Login <!-- TODO : mettre les liens vers la page des utilisateurs -->
+	@if (Model.Writers.Count > 1)
+	{
+		<span>
+			avec la collaboration de
+			@for (int i = 1; i < Model.Writers.Count; i++)
+			{
+				<a href="#">@Model.Writers[i].Login</a>
+				if (i != Model.Writers.Count - 1)
+				{
+					<span>, </span>
+				}
+			}
+		</span>
+
+	}
+	@if (Model.Post.Date_modified != null)
+	{
+		<br />
+		<span>Modifié pour la dernière fois le @Model.Post.Date_modified</span>
+	}
+</p>
+<hr />
+
+<!-- Photo -->
+@if (Model.Post.Picture != null)
+{
+	<!-- TODO : ajouter l'image ici -->
+	<hr />
+}
+
+<!-- corps du billet  -->
+<p>
+	@Html.Raw(Model.Post.Body.Replace(Environment.NewLine, "<br />"))
+</p>
+<hr />
+
+<!-- Ajout d'un commentaire -->
+<h4 style="text-decoration:underline">Commentaires</h4>
+@if (Model.UserIsConnected)
+{
+	<h5>Ajouter un commentaire</h5>
+	using (Html.BeginForm("Show", "Post", FormMethod.Post, new { id = Model.Post.IDpost}))
+	{
+		@Html.AntiForgeryToken()
+
+		<div>
+			@Html.LabelFor(model => model.Title)
+			@Html.TextBoxFor(model => model.Title)
+			@Html.ValidationMessageFor(model => model.Title, "", new { @class = "red-text text-accent-4" })
+		</div>
+		<div>
+			@Html.LabelFor(model => model.Body)
+			@Html.TextBoxFor(model => model.Body)
+			@Html.ValidationMessageFor(model => model.Body, "", new { @class = "red-text text-accent-4" })
+		</div>
+		<button class="btn waves-effect waves-light light-blue" type="submit" name="action">
+			Confirmer
+			<i class="material-icons right">comment</i>
+		</button>
+	}
+}
+else
+{
+	<a href="@Url.Action("Index", "Login",  new { Area = "Account", returnUrl = HttpContext.Current.Request.RawUrl})">Connectez-vous pour poster un commentaire</a>
+}
+<br />
+
+<!-- Affichage des commentaires --> <!-- WIP, à lo'avenir je ne pourrai pas juste filtrer les réponses de comms comme ici -->
+@foreach (Comment comm in Model.Comments.Where(comm => comm.IDparentComm == null).ToList())
+{
+	<div class="card">
+		<div class="card-content">
+			<span class="card-title">@comm.Title</span>
+			<p style="font-size:x-small">@comm.Date_posted</p>
+			<hr />
+			<p>
+				@Html.Raw(comm.Body.Replace(Environment.NewLine, "<br />"))
+			</p>
+		</div>
+		<div class="card-action">
+			<button class="btn waves-effect waves-light light-blue">
+				Répondre
+				<i class="material-icons right">comment</i>
+			</button>
+		</div>
+	</div>
+}

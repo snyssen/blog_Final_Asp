@@ -12,26 +12,36 @@ namespace Blog_final_Asp.Models
 
         public DAL() { db = new EFDBcontext(); }
 
-        public void AddAutor(int IDuser, int IDpost)
+        public int AddAutor(int IDuser, int IDpost)
         {
-            throw new NotImplementedException();
-        }
-
-        public void AddComment(string Title, string Body, DateTime date_posted, int IDuser, int IDpost, int? IDcomment = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddPost(string Title, string Body, DateTime date_posted, string Picture = null, DateTime ? date_modified = null)
-        {
-            db.Posts.Add(new Post { Title = Title, Body = Body, Date_posted = date_posted, Date_modified = date_modified, Picture = Picture });
+            Autor autor = new Autor { IDuser = IDuser, IDpost = IDpost };
+            db.Autors.Add(autor);
             db.SaveChanges();
+            return autor.IDautor;
         }
 
-        public void AddUser(string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic)
+        public int AddComment(string Title, string Body, DateTime date_posted, int IDuser, int IDpost, int? IDparentComment = null)
         {
-            db.Users.Add(new User { Login = Login, Mail = Mail, Password = Password, IDaccess_lvl = IDaccess_lvl, Profile_pic = Profile_pic });
+            Comment comment = new Comment { Title = Title, Body = Body, Date_posted = date_posted, IDuser = IDuser, IDpost = IDpost, IDparentComm = IDparentComment };
+            db.Comments.Add(comment);
             db.SaveChanges();
+            return comment.IDcomment;
+        }
+
+        public int AddPost(string Title, string Body, DateTime date_posted, string Picture = null, DateTime ? date_modified = null)
+        {
+            Post post = new Post { Title = Title, Body = Body, Date_posted = date_posted, Date_modified = date_modified, Picture = Picture };
+            db.Posts.Add(post);
+            db.SaveChanges();
+            return post.IDpost;
+        }
+
+        public int AddUser(string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic)
+        {
+            User user = new User { Login = Login, Mail = Mail, Password = Password, IDaccess_lvl = IDaccess_lvl, Profile_pic = Profile_pic };
+            db.Users.Add(user);
+            db.SaveChanges();
+            return user.IDuser;
         }
 
         public User AuthUser(string Login, string Password)
@@ -65,14 +75,9 @@ namespace Blog_final_Asp.Models
             throw new NotImplementedException();
         }
 
-        public List<Autor> GetAutorsPost(int IDpost)
+        public List<Autor> GetAutorsOfPost(int IDpost)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Autor> GetAutorsPost(string IDpoststr)
-        {
-            throw new NotImplementedException();
+            return db.Autors.Where(autor => autor.IDpost == IDpost).ToList();
         }
 
         public Comment GetComment(int ID)
@@ -92,22 +97,32 @@ namespace Blog_final_Asp.Models
 
         public List<Comment> GetCommentsPost(int IDpost)
         {
-            throw new NotImplementedException();
+            return db.Comments.Where(comm => comm.IDpost == IDpost).ToList();
         }
 
         public List<Comment> GetCommentsPost(string IDpoststr)
         {
-            throw new NotImplementedException();
+            if (int.TryParse(IDpoststr, out int ID))
+            {
+                return this.GetCommentsPost(ID);
+            }
+            else
+                return null;
         }
 
         public Post GetPost(int ID)
         {
-            throw new NotImplementedException();
+            return db.Posts.FirstOrDefault(post => post.IDpost == ID);
         }
 
         public Post GetPost(string IDstr)
         {
-            throw new NotImplementedException();
+            if (int.TryParse(IDstr, out int ID))
+            {
+                return this.GetPost(ID);
+            }
+            else
+                return null;
         }
 
         /// <summary>
@@ -163,6 +178,17 @@ namespace Blog_final_Asp.Models
         public List<User> GetUsers()
         {
             return db.Users.ToList();
+        }
+
+        public List<User> GetWritersFromPost(int IDpost)
+        {
+            List<User> users = new List<User>();
+            List<Autor> autors = this.GetAutorsOfPost(IDpost);
+            foreach(Autor autor in autors)
+            {
+                users.Add(db.Users.Where(user => user.IDuser == autor.IDuser).FirstOrDefault());
+            }
+            return users;
         }
     }
 }

@@ -21,7 +21,7 @@
 			 	<span class="card-title">@post.Title</span>
 		 }
 			 <p style="font-size:x-small">
-			 	Ecrit le @post.Date_posted par [WIP] <!-- TODO : ajouter le nom de l'auteur et un lien vers sa page-->
+			 	Ecrit le @post.Date_posted
 			@if (post.Date_modified != null)
 			{
 			 	<br />
@@ -33,7 +33,7 @@
 			 </p>
 			 </div>
 		<div class="card-action">
-			<a href="#" class="light-blue-text">Lire</a> <!-- TODO : ajouter lien vers la page du post -->
+			<a href="@Url.Action("Show", "Post", new { id = post.IDpost})" class="light-blue-text">Lire</a> <!-- TODO : ajouter lien vers la page du post -->
 		</div>
 	</div>
 }

@@ -26,23 +26,67 @@ namespace Blog_final_Asp.Controllers
             if (ModelState.IsValid)
             {
                 IDAL dal = new DAL();
+                int IdPost;
+
+                /* --- Ajout du post --- */
                 if (vm.Picture != null)
                 {
                     string FileName = System.IO.Path.GetFileName(vm.Picture.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/Images/Posts"), FileName);
                     vm.Picture.SaveAs(path);
-                    dal.AddPost(vm.Title, vm.Body, DateTime.Now, path);
+                    IdPost = dal.AddPost(vm.Title, vm.Body, DateTime.Now, path);
                 }
                 else
-                    dal.AddPost(vm.Title, vm.Body, DateTime.Now);
+                    IdPost = dal.AddPost(vm.Title, vm.Body, DateTime.Now);
+
+                /* --- Ajout de l'auteur --- */
+                dal.AddAutor(int.Parse(HttpContext.User.Identity.Name), IdPost);
+
                 return Redirect("/");
             }
             return View(vm);
         }
 
-        public ActionResult ID(int ID) // Affiche un billet par son ID
+        public ActionResult Show(int? id) // Affiche un billet par son ID
         {
-            throw new NotImplementedException();
+            if (id == null || id < 1)
+                return View("Error");
+            IDAL dal = new DAL();
+            PostShowViewModel vm = new PostShowViewModel
+            {
+                Post = dal.GetPost((int)id),
+                Writers = dal.GetWritersFromPost((int)id),
+                Comments = dal.GetCommentsPost((int)id),
+                UserIsConnected = HttpContext.User.Identity.IsAuthenticated
+            };
+            if (vm.Post == null)
+                return View("Error");
+            return View(vm);
+        }
+        [HttpPost]
+        public ActionResult Show(int? id, PostShowViewModel POSTdata)
+        {
+            if (id == null || id < 1)
+                return View("Error");
+            IDAL dal = new DAL();
+            PostShowViewModel vm = new PostShowViewModel
+            {
+                Post = dal.GetPost((int)id),
+                Writers = dal.GetWritersFromPost((int)id),
+                Comments = dal.GetCommentsPost((int)id),
+                UserIsConnected = HttpContext.User.Identity.IsAuthenticated,
+
+                Title = POSTdata.Title,
+                Body = POSTdata.Body,
+                IDparentComm = POSTdata.IDparentComm
+            };
+            if (vm.Post == null)
+                return View("Error");
+            if (ModelState.IsValid)
+            {
+                dal.AddComment(vm.Title, vm.Body, DateTime.Now, int.Parse(HttpContext.User.Identity.Name), vm.Post.IDpost, vm.IDparentComm);
+            }
+            return View(vm);
         }
     }
 }
