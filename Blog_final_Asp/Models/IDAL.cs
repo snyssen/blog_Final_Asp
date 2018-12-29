@@ -23,6 +23,8 @@ namespace Blog_final_Asp.Models
         Post GetPost(string IDstr);
         Post GetPostTitle(string Title);
         List<Post> GetPosts();
+        List<Post> GetPosts(int ToLoad, int PageNum);
+        int GetPostsNumber();
         void AddPost(string Title, string Body, DateTime date_posted, string Picture = null, DateTime? date_modified = null);
         // Autors
         Autor GetAutor(int ID);

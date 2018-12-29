@@ -118,6 +118,22 @@ namespace Blog_final_Asp.Models
         {
             return db.Posts.OrderByDescending(post => post.Date_posted).ToList();
         }
+        /// <summary>
+        /// Récupère le nombre de posts demandés à partir de la page demandée
+        /// </summary>
+        /// <param name="ToLoad">Nombre de posts par page</param>
+        /// <param name="PageNum">Page à charger</param>
+        /// <returns></returns>
+        public List<Post> GetPosts(int ToLoad, int PageNum)
+        {
+            int from = ToLoad * (PageNum - 1); // On calcule à partir de combien de posts on doit charger
+            return this.GetPosts().Skip(from).Take(ToLoad).ToList();
+        }
+
+        public int GetPostsNumber()
+        {
+            return this.GetPosts().Count;
+        }
 
         public Post GetPostTitle(string Title)
         {

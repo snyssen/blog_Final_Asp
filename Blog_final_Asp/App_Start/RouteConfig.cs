@@ -19,6 +19,13 @@ namespace Blog_final_Asp
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces:new[] { "Blog_final_Asp.Controllers" }
             );
+
+            // Route attrappe-tout, redirige sur la première page de l'accueil
+            routes.MapRoute(
+                 name: "CatchAll",
+                 url: "",
+                 defaults: new { controller = "Home", action = "Index", id = 1 }
+            );
         }
     }
 }

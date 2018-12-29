@@ -41,11 +41,11 @@ namespace Blog_final_Asp.Areas.Account.Controllers
                     // Création d'un cookie d'authentification
                     var authTicket = new FormsAuthenticationTicket(
                         1,                              // Version du ticket
-                        user.IDuser.ToString(),             // ID de l'utilisateur
+                        user.IDuser.ToString(),         // ID de l'utilisateur
                         DateTime.Now,                   // Date de création
                         DateTime.Now.AddDays(2),        // Date d'expiration
                         true,                           // Est persistant (survit à la fermeture du browser)
-                        user.Access_Lvl.Role     // On stocke le rôle
+                        user.Access_Lvl.Role            // On stocke le rôle
                         );
                     string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                     var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);

@@ -4,35 +4,104 @@
 	ViewBag.Title = "Accueil";
 }
 
-<h3>Historique</h3>
-
-@foreach (Post post in Model.Posts)
+<!-- ===== Affichage des posts ===== -->
+@foreach (Post post in Model.LoadedPosts)
 {
-	<!-- Plus tard, utiliser des cards -> https://materializecss.com/cards.html -->
-	<div>
-		<br />
-		<hr />
-		<br />
-		<h4>@Html.ActionLink(post.Title, "ID", "Post", post.IDpost)</h4>
-		<p style="font-size:x-small">
-			Ecrit le @post.Date_posted par [WIP]
+	<div class="card hoverable">
+		@if (post.Picture != null)
+		{
+			 <div class="card-image">
+			<img src="@post.Picture">
+			<span class="card-title">@post.Title</span>
+		</div>
+		}
+			 <div class="card-content">
+			 	@if (post.Picture == null)
+				{
+			 	<span class="card-title">@post.Title</span>
+		 }
+			 <p style="font-size:x-small">
+			 	Ecrit le @post.Date_posted par [WIP] <!-- TODO : ajouter le nom de l'auteur et un lien vers sa page-->
 			@if (post.Date_modified != null)
 			{
-				<br />
-				<span>Modifié pour la dernière fois le @post.Date_modified</span>
+			 	<br />
+			 	<span>Modifié pour la dernière fois le @post.Date_modified</span>
 			}
-		</p>
-		<p class="truncate">
-			@post.Body
-		</p>
+			 </p>
+			 <p class="truncate">
+			 	@post.Body
+			 </p>
+			 </div>
+		<div class="card-action">
+			<a href="#" class="light-blue-text">Lire</a> <!-- TODO : ajouter lien vers la page du post -->
+		</div>
 	</div>
 }
 
-@section scripts 
-	{
-	<script>
-		$(document).ready(function () {
+<!-- ===== Pagination ===== -->
+<!-- TODO : mettre de vrais liens de pages -->
+	<div>
+		<ul class="pagination">
+			@if (Model.PageNum == 1)
+			{
+				<li class="disabled">
+					<a href="#">
+						<i class="material-icons">chevron_left</i>
+					</a>
+				</li>
+			}
+			else
+			{
+				<li class="waves-effect">
+					<a href="@Url.Action("Index", "Home", new { id = (Model.PageNum - 1) })">
+						<i class="material-icons">chevron_left</i>
+					</a>
+				</li>
+			}
 
-		});
-	</script>
-	}
+			@if (Model.PageNum - 2 >= 1)
+			{
+				<li class="waves-effect">
+					<a href="@Url.Action("Index", "Home", new { id = (Model.PageNum - 2) })">@(Model.PageNum - 2)</a>
+				</li>
+			}
+			@if (Model.PageNum - 1 >= 1)
+			{
+				<li class="waves-effect">
+					<a href="@Url.Action("Index", "Home", new { id = (Model.PageNum - 1) })">@(Model.PageNum - 1)</a>
+				</li>
+			}
+			<li class="active light-blue">
+				<a href="#">@Model.PageNum</a>
+			</li>
+			@if (Model.PageNum + 1 <= Model.LastPage)
+			{
+				<li class="waves-effect">
+					<a href="@Url.Action("Index", "Home", new { id = (Model.PageNum + 1) })">@(Model.PageNum + 1)</a>
+				</li>
+			}
+			@if (Model.PageNum + 2 <= Model.LastPage)
+			{
+				<li class="waves-effect">
+					<a href="@Url.Action("Index", "Home", new { id = (Model.PageNum + 2) })">@(Model.PageNum + 2)</a>
+				</li>
+			}
+
+			@if (Model.PageNum == Model.LastPage)
+			{
+				<li class="disabled">
+					<a href="#">
+						<i class="material-icons">chevron_right</i>
+					</a>
+				</li>
+			}
+			else
+			{
+				<li class="waves-effect">
+					<a href="@Url.Action("Index", "Home", new { id = (Model.PageNum + 1) })">
+						<i class="material-icons">chevron_right</i>
+					</a>
+				</li>
+			}
+		</ul>
+	</div>

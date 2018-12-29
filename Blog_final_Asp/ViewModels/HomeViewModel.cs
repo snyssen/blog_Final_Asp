@@ -8,6 +8,8 @@ namespace Blog_final_Asp.ViewModels
 {
     public class HomeViewModel
     {
-        public List<Post> Posts { get; set; }
+        public List<Post> LoadedPosts { get; set; }
+        public int LastPage { get; set; }
+        public int PageNum { get; set; }
     }
 }
