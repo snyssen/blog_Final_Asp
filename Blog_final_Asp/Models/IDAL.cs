@@ -18,6 +18,9 @@ namespace Blog_final_Asp.Models
         List<User> GetUsers();
         int AddUser(string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic);
         User AuthUser(string Login, string Password);
+        // ViewUser
+        List<ViewUser> GetViewUsers();
+        ViewUser GetViewUser(int ID);
 
         // Posts
         Post GetPost(int ID);

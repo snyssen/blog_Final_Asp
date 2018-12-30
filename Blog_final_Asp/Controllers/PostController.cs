@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Blog_final_Asp.Filters;
 using Blog_final_Asp.Models;
 using Blog_final_Asp.ViewModels;
 
@@ -64,7 +65,7 @@ namespace Blog_final_Asp.Controllers
             return View(vm);
         }
         [HttpPost]
-        public ActionResult Show(int? id, PostShowViewModel POSTdata)
+        public ActionResult Show(int? id, PostShowViewModel POSTdata) // post d'un commentaire
         {
             if (id == null || id < 1)
                 return View("Error");
@@ -87,6 +88,18 @@ namespace Blog_final_Asp.Controllers
                 dal.AddComment(vm.Title, vm.Body, DateTime.Now, int.Parse(HttpContext.User.Identity.Name), vm.Post.IDpost, vm.IDparentComm);
             }
             return View(vm);
+        }
+        [AjaxFilter]
+        public ActionResult GetResForm(int IDpost, int IDparentComm) // Renvoie le formulaire pour poster une réponse à un commentaire
+        {
+            if (IDpost == 0 || IDparentComm == 0)
+                return null;
+            PostShowViewModel vm = new PostShowViewModel
+            {
+                Post = new Post { IDpost = IDpost },
+                IDparentComm = IDparentComm
+            };
+            return PartialView(vm);
         }
     }
 }

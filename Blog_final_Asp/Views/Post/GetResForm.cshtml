@@ -1,0 +1,22 @@
+﻿@model Blog_final_Asp.ViewModels.PostShowViewModel
+<div class="card-action right-align">
+	@using (Html.BeginForm("Show/" + Model.Post.IDpost, "Post"))
+	{
+		@Html.AntiForgeryToken()
+		@Html.HiddenFor(model => model.IDparentComm)
+		<div>
+			@Html.LabelFor(model => model.Title)
+			@Html.TextBoxFor(model => model.Title)
+			@Html.ValidationMessageFor(model => model.Title, "", new { @class = "red-text text-accent-4" })
+		</div>
+		<div>
+			@Html.LabelFor(model => model.Body)
+			@Html.TextBoxFor(model => model.Body)
+			@Html.ValidationMessageFor(model => model.Body, "", new { @class = "red-text text-accent-4" })
+		</div>
+		<button class="btn waves-effect waves-light light-blue" type="submit" name="action">
+			Confirmer
+			<i class="material-icons right">comment</i>
+		</button>
+	}
+</div>

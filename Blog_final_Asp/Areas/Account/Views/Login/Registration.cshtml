@@ -47,4 +47,10 @@ else
 		<br />
 		@Html.ActionLink("Vous disposez déjà d'un compte ?", "Index")
 	}
+
+	@section Scripts
+	{
+		@Scripts.Render("~/Scripts/jquery.validate-vsdoc.js")
+		@Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+	}
 }

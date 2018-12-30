@@ -4,53 +4,58 @@
 	ViewBag.Title = "Billet " + Model.Post.IDpost;
 }
 
-<h2>@Model.Post.Title</h2>
+<div class="card">
+	<div class="card-content">
+		<h2>@Model.Post.Title</h2>
 
-<!-- Infos dates et auteurs -->
-<p style="font-size:x-small">
-	Ecrit le @Model.Post.Date_posted par @Model.Writers[0].Login <!-- TODO : mettre les liens vers la page des utilisateurs -->
-	@if (Model.Writers.Count > 1)
-	{
-		<span>
-			avec la collaboration de
-			@for (int i = 1; i < Model.Writers.Count; i++)
+		<!-- Infos dates et auteurs -->
+		<p style="font-size:x-small">
+			Ecrit le @Model.Post.Date_posted par <a href="@Url.Action("Show/" + @Model.Writers[0].IDuser, "User",  new { Area = "Account"})">@Model.Writers[0].Login</a>
+			@if (Model.Writers.Count > 1)
 			{
-				<a href="#">@Model.Writers[i].Login</a>
-				if (i != Model.Writers.Count - 1)
-				{
-					<span>, </span>
-				}
+				<span>
+					avec la collaboration de
+					@for (int i = 1; i < Model.Writers.Count; i++)
+					{
+						<a href="@Url.Action("Show/" + @Model.Writers[i].IDuser, "User",  new { Area = "Account"})">@Model.Writers[i].Login</a>
+						if (i != Model.Writers.Count - 1)
+						{
+							<span>, </span>
+						}
+					}
+				</span>
+
 			}
-		</span>
+			@if (Model.Post.Date_modified != null)
+			{
+				<br />
+				<span>Modifié pour la dernière fois le @Model.Post.Date_modified</span>
+			}
+		</p>
+		<hr />
 
-	}
-	@if (Model.Post.Date_modified != null)
-	{
-		<br />
-		<span>Modifié pour la dernière fois le @Model.Post.Date_modified</span>
-	}
-</p>
-<hr />
+		<!-- Photo -->
+		@if (Model.Post.Picture != null)
+		{
+			<div class="card-image">
+				<img src="@Url.Content("~/" + Model.Post.Picture)" />
+			</div>
+			<hr />
+		}
 
-<!-- Photo -->
-@if (Model.Post.Picture != null)
-{
-	<!-- TODO : ajouter l'image ici -->
-	<hr />
-}
-
-<!-- corps du billet  -->
-<p>
-	@Html.Raw(Model.Post.Body.Replace(Environment.NewLine, "<br />"))
-</p>
-<hr />
+		<!-- corps du billet  -->
+		<p>
+			@Html.Raw(Model.Post.Body.Replace(Environment.NewLine, "<br />"))
+		</p>
+	</div>
+</div>
 
 <!-- Ajout d'un commentaire -->
 <h4 style="text-decoration:underline">Commentaires</h4>
 @if (Model.UserIsConnected)
 {
 	<h5>Ajouter un commentaire</h5>
-	using (Html.BeginForm("Show", "Post", FormMethod.Post, new { id = Model.Post.IDpost}))
+	using (Html.BeginForm("Show", "Post", FormMethod.Post))
 	{
 		@Html.AntiForgeryToken()
 
@@ -76,23 +81,70 @@ else
 }
 <br />
 
-<!-- Affichage des commentaires --> <!-- WIP, à lo'avenir je ne pourrai pas juste filtrer les réponses de comms comme ici -->
-@foreach (Comment comm in Model.Comments.Where(comm => comm.IDparentComm == null).ToList())
+<div id="comments-wrapper">
+	<!-- Affichage des commentaires -->
+	@foreach (Comment comm in Model.Comments.Where(comm => comm.IDparentComm == null).ToList())
+	{
+		<div class="card">
+			<div class="card-content">
+				<span class="card-title">@comm.Title</span>
+				<p style="font-size:x-small">@comm.Date_posted</p>
+				<hr />
+				<p>
+					@Html.Raw(comm.Body.Replace(Environment.NewLine, "<br />"))
+				</p>
+			</div>
+			@if (Model.UserIsConnected)
+			{
+				<div id="card-@comm.IDcomment" class="card-action">
+					<button class="btn waves-effect waves-light light-blue" id="@comm.IDcomment">
+						Répondre
+						<i class="material-icons right">comment</i>
+					</button>
+				</div>
+			}
+		</div>
+		<div class="row">
+			<!-- Liste des réponses à ce commentaire -->
+			@foreach (Comment res in Model.Comments.Where(r => r.IDparentComm == comm.IDcomment).ToList())
+			{
+				<div class="card col s10 offset-s2">
+					<div class="card-content">
+						<span class="card-title">@res.Title</span>
+						<p style="font-size:x-small">@res.Date_posted</p>
+						<hr />
+						<p>
+							@Html.Raw(res.Body.Replace(Environment.NewLine, "<br />"))
+						</p>
+					</div>
+				</div>
+			}
+		</div>
+	}
+</div>
+
+@section Scripts
 {
-	<div class="card">
-		<div class="card-content">
-			<span class="card-title">@comm.Title</span>
-			<p style="font-size:x-small">@comm.Date_posted</p>
-			<hr />
-			<p>
-				@Html.Raw(comm.Body.Replace(Environment.NewLine, "<br />"))
-			</p>
-		</div>
-		<div class="card-action">
-			<button class="btn waves-effect waves-light light-blue">
-				Répondre
-				<i class="material-icons right">comment</i>
-			</button>
-		</div>
-	</div>
+	<script>
+		$('#comments-wrapper').on('click', '.btn', function (el) { // On récupère le bouton qui a trigger l'événement
+			var CommData = {
+				IDpost: @Model.Post.IDpost,
+				IDparentComm: parseInt(el.target.id) // cast en int
+			};
+			$.ajax({
+				url: "@Url.Action("GetResForm")" + "?IDpost=" + @Model.Post.IDpost + "&IDparentComm=" + el.target.id,
+				cache: false,
+				type: "GET",
+				dataType: "html",
+				success: function (data, textStatus, XMLHttpRequest) {
+					$('#card-' + el.target.id).replaceWith( // On ajoute le formulaire dans la card avec le bon ID
+						data
+					);
+				}
+			});
+		});
+	</script>
+
+	@Scripts.Render("~/Scripts/jquery.validate-vsdoc.js")
+	@Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
 }

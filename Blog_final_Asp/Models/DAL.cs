@@ -180,6 +180,25 @@ namespace Blog_final_Asp.Models
             return db.Users.ToList();
         }
 
+        public ViewUser GetViewUser(int ID)
+        {
+            User user = this.GetUser(ID);
+            if (user == null)
+                return null;
+            return new ViewUser { IDuser = user.IDuser, Login = user.Login, Mail = user.Mail, Password = user.Password, Profile_pic = user.Profile_pic, Access_lvl = (this.GetAccess_lvl(user.IDaccess_lvl)).Role };
+        }
+
+        public List<ViewUser> GetViewUsers()
+        {
+            List<ViewUser> viewUsers = new List<ViewUser>();
+            List<User> users = this.GetUsers();
+            foreach (User user in users)
+            {
+                viewUsers.Add(new ViewUser { IDuser = user.IDuser, Login = user.Login, Mail = user.Mail, Password = user.Password, Profile_pic = user.Profile_pic, Access_lvl = (this.GetAccess_lvl(user.IDaccess_lvl)).Role });
+            }
+            return viewUsers;
+        }
+
         public List<User> GetWritersFromPost(int IDpost)
         {
             List<User> users = new List<User>();

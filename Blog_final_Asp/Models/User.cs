@@ -31,10 +31,10 @@ namespace Blog_final_Asp.Models
          * 
          * L'access level (**access_lvl**) définit les droits d'un utilisateur sur le blog
          *   ---
-         *  - **Niveau 0** : simple **lecteur** du blog, il peut donc lire tous les posts et les commenter
-         *  - **niveau 1** : **auteur**, il peut poster de nouveaux billets et  modifier ou supprimer ses propres billets + droits précédents
-         *  - **niveau 2** : **modérateur**, il peut modifier ou supprimer les billets et commentaires des autres + droits précédents
-         *  - **niveau 3** : **admin**, il a un accès direct à la base de données pour des opérations CRUD + droits précédents
+         *  - **Niveau 1** : simple **lecteur** du blog, il peut donc lire tous les posts et les commenter
+         *  - **niveau 2** : **auteur**, il peut poster de nouveaux billets et  modifier ou supprimer ses propres billets + droits précédents
+         *  - **niveau 3** : **modérateur**, il peut modifier ou supprimer les billets et commentaires des autres + droits précédents
+         *  - **niveau 4** : **admin**, il a un accès direct à la base de données pour des opérations CRUD + droits précédents
          *  
          *  - **pas de niveau défini** => l'utilisateur n'est pas connecté, il a le droit de lire tous les billets mais il ne peut poster aucun commentaire
         */

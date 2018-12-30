@@ -4,13 +4,16 @@
 	ViewBag.Title = "Accueil";
 }
 
+<h2 class="center-align">Historique des billets</h2>
+<hr />
+
 <!-- ===== Affichage des posts ===== -->
 @foreach (Post post in Model.LoadedPosts)
 {
 	<div class="card hoverable">
 		@if (post.Picture != null)
 		{
-			 <div class="card-image">
+			 <div class="card-image responsive-img">
 			<img src="@post.Picture">
 			<span class="card-title">@post.Title</span>
 		</div>
@@ -39,7 +42,6 @@
 }
 
 <!-- ===== Pagination ===== -->
-<!-- TODO : mettre de vrais liens de pages -->
 	<div>
 		<ul class="pagination">
 			@if (Model.PageNum == 1)

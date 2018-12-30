@@ -1,0 +1,51 @@
+﻿@model Blog_final_Asp.Areas.Account.ViewModels.UserSearchViewModel
+@{
+	ViewBag.Title = "Recherche d'utilisateur";
+}
+
+<h2>Recherche parmis les utilisateurs</h2>
+
+@using (Ajax.BeginForm("Search", new AjaxOptions
+{
+	HttpMethod = "GET",
+	InsertionMode = InsertionMode.Replace,
+	UpdateTargetId = "results",
+	OnFailure = "SearchError",
+	LoadingElementId = "Loading",
+}))
+{
+	@Html.LabelFor(m => m.SearchStr, "Nom d'utilisateur")
+	@Html.TextBoxFor(m => m.SearchStr);
+	<button class="btn waves-effect waves-light light-blue" type="submit">
+		Rechercher
+		<i class="material-icons right">search</i>
+	</button>
+	<br />
+	<br />
+
+	<div id="Loading" class="preloader-wrapper big active" style="display:none">
+		<div class="spinner-layer spinner-blue-only">
+			<div class="circle-clipper left">
+				<div class="circle"></div>
+			</div><div class="gap-patch">
+				<div class="circle"></div>
+			</div><div class="circle-clipper right">
+				<div class="circle"></div>
+			</div>
+		</div>
+	</div>
+
+	<div id="results">
+		@{ Html.RenderAction("Search", new { UserSearchViewModel = Model }); }
+	</div>
+}
+
+@section Scripts
+	{
+	@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+	<script>
+		function SearchError() {
+			$("#results").html("Une erreur s'est produite, veuillez réessayer")
+		}
+	</script>
+}

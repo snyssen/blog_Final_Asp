@@ -1,0 +1,17 @@
+﻿@model Blog_final_Asp.Areas.Account.ViewModels.UserShowViewModel
+@{
+	 ViewBag.Title = "Utilisateur " + Model.User.IDuser;
+}
+
+<div class="card">
+	<div class="card-content">
+		<img src="@Url.Content("~/" + Model.User.Profile_pic)" class="circle responsive-img col s4 left" />
+		<h2 class="col s4 center-align">@Model.User.Login</h2>
+		<br />
+		<hr />
+		<h5>Rôle: @Model.User.Access_lvl</h5>
+		<h5>Contact: <a href="mailto:@Model.User.Mail">@Model.User.Mail</a></h5>
+	</div>
+</div>
+
+<!-- TODO : form de modif au cas où l'utilisateur est sur son propre profil -->

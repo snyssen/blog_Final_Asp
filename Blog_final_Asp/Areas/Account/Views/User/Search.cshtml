@@ -1,0 +1,19 @@
+﻿@model Blog_final_Asp.Areas.Account.ViewModels.UserSearchViewModel
+@if (Model.Users.Count == 0)
+{
+	<p>Pas de résultat</p>
+}
+else
+{
+
+	<ul class="collection">
+		@foreach (Blog_final_Asp.Models.User user in Model.Users)
+		{
+			<li class="collection-item avatar">
+				<img src="@Url.Content("~/" + user.Profile_pic)" alt="Pas de photo de profil" class="circle" />
+				<span class="title"><a href="@Url.Action("Show", "User", new { id = user.IDuser })" class="light-blue-text">@user.Login</a></span>
+			</li>
+		}
+	</ul>
+}
+
