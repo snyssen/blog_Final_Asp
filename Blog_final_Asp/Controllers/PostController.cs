@@ -35,7 +35,7 @@ namespace Blog_final_Asp.Controllers
                     string FileName = System.IO.Path.GetFileName(vm.Picture.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/Images/Posts"), FileName);
                     vm.Picture.SaveAs(path);
-                    IdPost = dal.AddPost(vm.Title, vm.Body, DateTime.Now, path);
+                    IdPost = dal.AddPost(vm.Title, vm.Body, DateTime.Now, Url.Content("~/Images/Posts/" + FileName));
                 }
                 else
                     IdPost = dal.AddPost(vm.Title, vm.Body, DateTime.Now);

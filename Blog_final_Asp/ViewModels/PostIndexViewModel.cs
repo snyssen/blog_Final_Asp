@@ -17,6 +17,6 @@ namespace Blog_final_Asp.ViewModels
         public string Body { get; set; }
         [Display(Name = "Photo de couverture (optionnelle)")]
         [Blog_final_Asp.Filters.FileExtensions("jpg,png,gif", ErrorMessage = "Veuillez entrer une image au format .jpg, .png ou .gif")]
-        public HttpPostedFile Picture { get; set; }
+        public HttpPostedFileBase Picture { get; set; }
     }
 }

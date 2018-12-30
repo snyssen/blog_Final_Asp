@@ -45,7 +45,8 @@
 
 		<!-- corps du billet  -->
 		<p>
-			@Html.Raw(Model.Post.Body.Replace(Environment.NewLine, "<br />"))
+			<!-- Pseudo sanitize du corps, retire tous les "<" et ">", puis remplace les \n par des <br /> afin de garder les paragraphes (pas nécessaire avec les paramètres par défaut d'ASP, vu qu'ASP bloque les POST qui contiennent des tags html...) -->
+			@Html.Raw(Model.Post.Body.Replace("<", "&amp;lt;").Replace(">", "&amp;gt;").Replace(Environment.NewLine, "<br />"))
 		</p>
 	</div>
 </div>
@@ -91,7 +92,7 @@ else
 				<p style="font-size:x-small">@comm.Date_posted</p>
 				<hr />
 				<p>
-					@Html.Raw(comm.Body.Replace(Environment.NewLine, "<br />"))
+					@Html.Raw(comm.Body.Replace("<", "&amp;lt;").Replace(">", "&amp;gt;").Replace(Environment.NewLine, "<br />"))
 				</p>
 			</div>
 			@if (Model.UserIsConnected)

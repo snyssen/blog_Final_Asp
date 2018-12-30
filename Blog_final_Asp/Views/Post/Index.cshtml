@@ -4,8 +4,9 @@
 }
 
 <h2>Ajouter un nouveau billet</h2>
-
-<form method="post" enctype="multipart/form-data">
+<!-- Utilisation d'enctype="multipart/form-data" pour autoriser le post d'images -->
+@using (Html.BeginForm("Index", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
 	@Html.AntiForgeryToken()
 
 	<div>
@@ -18,18 +19,19 @@
 		@Html.TextAreaFor(model => model.Body, new { @class = "materialize-textarea" })
 		@Html.ValidationMessageFor(model => model.Body, "", new { @class = "red-text text-accent-4" })
 	</div>
-	<div class="btn waves-effect waves-light light-blue " style="display:none">
+	<div class="btn waves-effect waves-light light-blue ">
 		@Html.LabelFor(model => model.Picture, new { @class = "white-text" })
 		@Html.TextBoxFor(model => model.Picture, new { type = "file" })
-		@Html.ValidationMessageFor(model => model.Picture, "", new { @class = "red-text text-accent-4" })
 	</div>
 	<br />
+	@Html.ValidationMessageFor(model => model.Picture, "", new { @class = "red-text text-accent-4" })
 	<br />
 	<button class="btn waves-effect waves-light light-blue" type="submit" name="action">
 		Confirmer
 		<i class="material-icons right">send</i>
 	</button>
-</form>
+}
+
 
 @section Scripts
 	{
