@@ -11,6 +11,7 @@ using Blog_final_Asp.Models;
 
 namespace Blog_final_Asp.Areas.Administration.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private EFDBcontext db = new EFDBcontext();

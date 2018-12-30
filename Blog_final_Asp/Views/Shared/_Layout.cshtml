@@ -17,28 +17,19 @@
 </head>
 <body>
 	<header>
-		<!-- Dropdown Structure -->
-		<ul id="dropdown1" class="dropdown-content">
-			<li><a href="#!">one</a></li>
-			<li><a href="#!">two</a></li>
-			<li class="divider"></li>
-			<li><a href="#!">three</a></li>
-		</ul>
-		<!-- Menu de navigation -->
+<!-- Menu de navigation -->
 		<nav class="light-blue lighten-1" role="navigation">
 			<div class="nav-wrapper container">
 				<a id="logo-container" href="/" class="brand-logo">SimCity</a>
 				<ul class="right hide-on-med-and-down">
-					<li><a href="#">Navbar Link</a></li>
-					<li><a href="#">Another Navbar Link</a></li>
-					<!-- Dropdown Trigger -->
-					<li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+					<li><a href="/"><i class="material-icons">home</i></a></li>
+					<li><a href="@Url.Action("Index", "User", new { Area = "Account" })"><i class="material-icons">people</i></a></li>
+					<li><a href="@Url.Action("Index", "Login", new { Area = "Account"})"><i class="material-icons">power_settings_new</i></a></li>
 				</ul>
-
 			</div>
 		</nav>
 	</header>
-		<!-- Fin menu de navigation -->
+<!-- Fin menu de navigation -->
 	<main>
 		<div class="section no-pad-bot">
 			<div class="container">
@@ -47,30 +38,34 @@
 		</div>
 	</main>
 
-	<footer class="page-footer blue">
+<!-- Footer -->
+	<footer class="page-footer blue darken-2">
 		<div class="container">
 			<div class="row">
-				<div class="col l6 s12">
-					<h5 class="white-text">Company Bio</h5>
-					<p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
-				</div>
-				<div class="col l3 s12">
-					<h5 class="white-text">Settings</h5>
+				<div class="col l4">
+					<h5 class="white-text">Blog</h5>
 					<ul>
-						<li><a class="white-text" href="#!">Link 1</a></li>
-						<li><a class="white-text" href="#!">Link 2</a></li>
-						<li><a class="white-text" href="#!">Link 3</a></li>
-						<li><a class="white-text" href="#!">Link 4</a></li>
+						<li><a class="white-text" href="/">Accueil</a></li>
+						<li><a class="white-text" href="@Url.Action("Index", "Post", new { Area = "" })">Ajouter un post</a></li>
+					</ul>				
+				</div>
+				<div class="col l4">
+					<h5 class="white-text">Administration</h5>
+					<ul>
+						<li><a class="white-text" href="@Url.Action("Index", "Home", new { Area = "Administration" })">Accueil</a></li>
+						<li><a class="white-text" href="@Url.Action("Index", "Access_lvl", new { Area = "Administration" })">Rôles</a></li>
+						<li><a class="white-text" href="@Url.Action("Index", "Comments", new { Area = "Administration" })">Commentaires</a></li>
+						<li><a class="white-text" href="@Url.Action("Index", "Posts", new { Area = "Administration" })">Billets</a></li>
+						<li><a class="white-text" href="@Url.Action("Index", "Users", new { Area = "Administration" })">Utilisateurs</a></li>
 					</ul>
 				</div>
-				<div class="col l3 s12">
-					<h5 class="white-text">Connect</h5>
+				<div class="col l4">
+					<h5 class="white-text">Utilisateurs</h5>
 					<ul>
-						<li><a class="white-text" href="#!">Link 1</a></li>
-						<li><a class="white-text" href="#!">Link 2</a></li>
-						<li><a class="white-text" href="#!">Link 3</a></li>
-						<li><a class="white-text" href="#!">Link 4</a></li>
+						<li><a class="white-text" href="@Url.Action("Index", "Login", new { Area = "Account"})">Se connecter</a></li>
+						<li><a class="white-text" href="@Url.Action("Disconnect", "Login", new { Area = "Account"})">Se déconnecter</a></li>
+						<li><a class="white-text" href="@Url.Action("Registration", "Login", new { Area = "Account"})">S'inscrire</a></li>
+						<li><a class="white-text" href="@Url.Action("Index", "User", new { Area = "Account"})">Chercher un utilisateur</a></li>
 					</ul>
 				</div>
 			</div>
@@ -86,6 +81,6 @@
 	@Scripts.Render("~/bundles/bootstrap")
 	@Scripts.Render("~/Scripts/materialize/materialize.min.js")
 	@Scripts.Render("~/Scripts/init.js")
-	@RenderSection("scripts", required: false)
+	@RenderSection("Scripts", required: false)
 </body>
 </html>
