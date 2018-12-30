@@ -36,11 +36,53 @@ namespace Blog_final_Asp.Areas.Account.Controllers
                 IDloggedUser = 0;
             UserShowViewModel vm = new UserShowViewModel
             {
-                User = dal.GetViewUser((int)id),
+                ViewUser = dal.GetViewUser((int)id),
                 LoggedUserID = IDloggedUser
             };
-            if (vm.User == null)
+            if (vm.ViewUser == null)
                 return View("Error");
+            if (vm.LoggedUserID == vm.ViewUser.IDuser) // L'utilisateur est sur son propre profil => on récupère ses infos pour modif
+            {
+                vm.IDuser = vm.ViewUser.IDuser;
+                vm.Login = vm.ViewUser.Login;
+                vm.Mail = vm.ViewUser.Mail;
+            }
+            return View(vm);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Show(int? id, UserShowViewModel vm) // Affiche l'utilisateur avec l'id mentionné
+        {
+            IDAL dal = new DAL();
+            if (ModelState.IsValid)
+            {
+                if (id == null || id < 1 || vm.LoggedUserID != int.Parse(HttpContext.User.Identity.Name))
+                    return View("Error");
+                User TestUser = dal.GetUserLogin(vm.Login);
+                if (TestUser == null || TestUser.IDuser == vm.IDuser) // Soit l'user change de login et donc son nouveau login ne doit pas exister, soit il ne change pas de login et donc on le retrouve dans la DB (et il a le même ID)
+                {
+                    if (vm.Picture != null)
+                    {
+                        string FileName = System.IO.Path.GetFileName(vm.Picture.FileName);
+                        string path = System.IO.Path.Combine(Server.MapPath("~/Images/profile_pics"), FileName);
+                        vm.Picture.SaveAs(path);
+                        if (dal.UpdateUser(vm.IDuser, vm.Login, vm.Mail, Url.Content("~/Images/profile_pics/" + FileName)))
+                            return RedirectToAction("Show/" + id);
+                        else
+                            ModelState.AddModelError("User.Login", "L'utilisateur est introuvable !");
+                    }
+                    else
+                    {
+                        if (dal.UpdateUser(vm.IDuser, vm.Login, vm.Mail))
+                            return RedirectToAction("Show/" + id);
+                        else
+                            ModelState.AddModelError("User.Login", "L'utilisateur est introuvable !");
+                    }
+                }
+                else
+                    ModelState.AddModelError("User.Login", "Ce nom d'utilisateur est déjà pris !");
+            }
+            vm.ViewUser = dal.GetViewUser(vm.IDuser);
             return View(vm);
         }
     }

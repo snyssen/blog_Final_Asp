@@ -209,5 +209,68 @@ namespace Blog_final_Asp.Models
             }
             return users;
         }
+
+        public bool UpdateUser(int IDuser, string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic)
+        {
+            User user = this.GetUser(IDuser);
+            if (user != null)
+            {
+                user = new User { IDuser = IDuser, Login = Login, Mail = Mail, Password = Password, IDaccess_lvl = IDaccess_lvl, Profile_pic = Profile_pic };
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateUser(int IDuser, string Login, string Mail, string Profile_pic)
+        {
+            User user = this.GetUser(IDuser);
+            if (user != null)
+            {
+                user.Login = Login;
+                user.Mail = Mail;
+                user.Profile_pic = Profile_pic;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateUser(int IDuser, string Login, string Mail)
+        {
+            User user = this.GetUser(IDuser);
+            if (user != null)
+            {
+                user.Login = Login;
+                user.Mail = Mail;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateUser(int IDuser, string Profile_pic)
+        {
+            User user = this.GetUser(IDuser);
+            if (user != null)
+            {
+                user.Profile_pic = Profile_pic;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateUser(int IDuser, int IDaccess_lvl)
+        {
+            User user = this.GetUser(IDuser);
+            if (user != null)
+            {
+                user.IDaccess_lvl = IDaccess_lvl;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

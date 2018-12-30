@@ -1,17 +1,65 @@
 ﻿@model Blog_final_Asp.Areas.Account.ViewModels.UserShowViewModel
 @{
-	 ViewBag.Title = "Utilisateur " + Model.User.IDuser;
+	ViewBag.Title = "Utilisateur " + Model.ViewUser.IDuser;
 }
 
-<div class="card">
-	<div class="card-content">
-		<img src="@Url.Content("~/" + Model.User.Profile_pic)" class="circle responsive-img col s4 left" />
-		<h2 class="col s4 center-align">@Model.User.Login</h2>
-		<br />
-		<hr />
-		<h5>Rôle: @Model.User.Access_lvl</h5>
-		<h5>Contact: <a href="mailto:@Model.User.Mail">@Model.User.Mail</a></h5>
-	</div>
-</div>
+@if (Model.LoggedUserID == Model.ViewUser.IDuser)
+{
+	 <h2>Souhaitez-vous modifier votre compte ?</h2>
+	using (Html.BeginForm("Show", "User", FormMethod.Post, new { Area = "Account", enctype = "multipart/form-data" }))
+	{
+		@Html.AntiForgeryToken()
+		@Html.HiddenFor(model => model.LoggedUserID)
+		@Html.HiddenFor(model => model.IDuser)
 
-<!-- TODO : form de modif au cas où l'utilisateur est sur son propre profil -->
+		<div class="card">
+			<div class="card-content">
+				<img src="@Url.Content("~/" + Model.ViewUser.Profile_pic)" class="circle responsive-img col s4 center-block" />
+				<br />
+				<div>
+					@Html.LabelFor(model => model.Login)
+					@Html.TextBoxFor(model => model.Login)
+					@Html.ValidationMessageFor(model => model.Login, "", new { @class = "red-text text-accent-4" })
+				</div>
+				<div>
+					@Html.LabelFor(model => model.Mail)
+					@Html.TextBoxFor(model => model.Mail)
+					@Html.ValidationMessageFor(model => model.Mail, "", new { @class = "red-text text-accent-4" })
+				</div>
+				<div>
+					<div class="btn waves-effect waves-light light-blue ">
+						@Html.LabelFor(model => model.Picture, new { @class = "white-text" })
+						@Html.TextBoxFor(model => model.Picture, new { type = "file" })
+					</div>
+					<br />
+					@Html.ValidationMessageFor(model => model.Picture, "", new { @class = "red-text text-accent-4" })
+				</div>
+			</div>
+			<div class="card-action">
+				<button class="btn waves-effect waves-light light-blue" type="submit" name="action">
+					Confirmer
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</div>
+	}
+
+	@section Scripts
+	{
+		@Scripts.Render("~/Scripts/jquery.validate-vsdoc.js")
+		@Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+	}
+}
+else
+{
+	<div class="card">
+		<div class="card-content">
+			<img src="@Url.Content("~/" + Model.ViewUser.Profile_pic)" class="circle responsive-img col s4 left" />
+			<h2 class="col s4 center-align">@Model.ViewUser.Login</h2>
+			<br />
+			<hr />
+			<h5>Rôle: @Model.ViewUser.Access_lvl</h5>
+			<h5>Contact: <a href="mailto:@Model.ViewUser.Mail">@Model.ViewUser.Mail</a></h5>
+		</div>
+	</div>
+}

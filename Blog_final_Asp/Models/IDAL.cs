@@ -18,6 +18,11 @@ namespace Blog_final_Asp.Models
         List<User> GetUsers();
         int AddUser(string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic);
         User AuthUser(string Login, string Password);
+        bool UpdateUser(int IDuser, string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic);
+        bool UpdateUser(int IDuser, string Login, string Mail, string Profile_pic);
+        bool UpdateUser(int IDuser, string Login, string Mail);
+        bool UpdateUser(int IDuser, string Profile_pic);
+        bool UpdateUser(int IDuser, int IDaccess_lvl);
         // ViewUser
         List<ViewUser> GetViewUsers();
         ViewUser GetViewUser(int ID);
