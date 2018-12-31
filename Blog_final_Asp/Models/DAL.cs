@@ -50,6 +50,18 @@ namespace Blog_final_Asp.Models
             return db.Users.FirstOrDefault(user => user.Login == Login && user.Password == Password);
         }
 
+        public bool DeleteAutor(int IDautor)
+        {
+            Autor autor = this.GetAutor(IDautor);
+            if (autor != null)
+            {
+                db.Autors.Remove(autor);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public bool DeletePost(int IDpost)
         {
             Post post = this.GetPost(IDpost);
@@ -72,9 +84,25 @@ namespace Blog_final_Asp.Models
             return db.Access_lvls.FirstOrDefault(acc => acc.IDaccess_lvl == ID);
         }
 
+        /// <summary>
+        /// Renvoie tous les utilisateurs ayant le droit d'écrire des posts
+        /// </summary>
+        /// <returns></returns>
+        public List<User> GetAllAuteurs()
+        {
+            List<ViewUser> viewUsers = this.GetViewUsers();
+            List<User> users = new List<User>();
+            foreach (ViewUser viewUser in viewUsers)
+            {
+                if (viewUser.Access_lvl != "Lecteur")
+                    users.Add(this.GetUser(viewUser.IDuser));
+            }
+            return users;
+        }
+
         public Autor GetAutor(int ID)
         {
-            throw new NotImplementedException();
+            return db.Autors.FirstOrDefault(aut => aut.IDautor == ID);
         }
 
         public Autor GetAutor(string IDstr)

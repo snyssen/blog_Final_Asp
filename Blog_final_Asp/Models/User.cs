@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -41,6 +42,7 @@ namespace Blog_final_Asp.Models
         [Required]
         public string Profile_pic { get; set; }
 
+        [ForeignKey("IDaccess_lvl")]
         public virtual Access_lvl Access_Lvl { get; set; }
         public virtual ICollection<Autor> Autors { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

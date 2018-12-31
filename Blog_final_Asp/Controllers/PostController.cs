@@ -119,11 +119,12 @@ namespace Blog_final_Asp.Controllers
                 return View("Error");
             PostSettingsViewModel vm = new PostSettingsViewModel // Pas besoin de vérifier que l'ID des cookies est set vu que le filtre Authorize nous assure déjà que l'user est authentifié
             {
-                IDpost = post.IDpost,
+                IDpost = post.IDpost,   
                 Title = post.Title,
                 Body = post.Body,
                 PostPic = post.Picture,
                 Writers = dal.GetWritersFromPost((int)id),
+                Auteurs = dal.GetAllAuteurs(),
                 LoggedUserID = int.Parse(HttpContext.User.Identity.Name),
                 LoggedUserRole = dal.GetViewUser(int.Parse(HttpContext.User.Identity.Name)).Access_lvl
             };
@@ -131,6 +132,13 @@ namespace Blog_final_Asp.Controllers
             // L'utilisateur peut modifier le billet si 1) il en est un des auteurs, 2) si il est modérateur ou admin
             if(vm.Writers.Where(user => user.IDuser == vm.LoggedUserID).Count() > 0 || vm.LoggedUserRole == "Moderateur" || vm.LoggedUserRole == "Admin")
             {
+                // On retire des auteurs ceux qui sont déjà gestionnaires du post
+                foreach (User user in vm.Writers)
+                {
+                    User ToRemove = vm.Auteurs.FirstOrDefault(aut => aut.IDuser == user.IDuser);
+                    if (ToRemove != null)
+                        vm.Auteurs.Remove(ToRemove);
+                }
                 return View(vm);
             }
             return RedirectToAction("Index", "Login", new { Area = "Account", returnUrl = HttpContext.Request.RawUrl });
@@ -187,9 +195,26 @@ namespace Blog_final_Asp.Controllers
         public ActionResult DeletePost(PostSettingsViewModel vm) // Suppression de l'image
         {
             IDAL dal = new DAL();
-            Post post = dal.GetPost(vm.IDpost);
             if (!dal.DeletePost(vm.IDpost))
                 return View("Error");
+            return RedirectToAction("Index", "Home");
+        }
+        [Authorize(Roles = ("Admin,Moderateur"))]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddAutor(PostSettingsViewModel vm)
+        {
+            IDAL dal = new DAL();
+            dal.AddAutor(vm.IDpost, vm.IDauteur);
+            return RedirectToAction("Index", "Home");
+        }
+        [Authorize(Roles = ("Admin,Moderateur"))]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAutor(PostSettingsViewModel vm)
+        {
+            IDAL dal = new DAL();
+            dal.DeleteAutor(vm.IDauteur);
             return RedirectToAction("Index", "Home");
         }
     }

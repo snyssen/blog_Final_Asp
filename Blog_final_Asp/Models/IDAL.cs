@@ -16,6 +16,7 @@ namespace Blog_final_Asp.Models
         User GetUserLogin(string Login);
         List<User> GetWritersFromPost(int IDpost);
         List<User> GetUsers();
+        List<User> GetAllAuteurs();
         int AddUser(string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic);
         User AuthUser(string Login, string Password);
         bool UpdateUser(int IDuser, string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic);
@@ -45,6 +46,7 @@ namespace Blog_final_Asp.Models
         List<Autor> GetAutorsOfPost(int IDpost);
         List<Autor> GetAutors();
         int AddAutor(int IDuser, int IDpost);
+        bool DeleteAutor(int IDautor);
 
         // Comments
         Comment GetComment(int ID);

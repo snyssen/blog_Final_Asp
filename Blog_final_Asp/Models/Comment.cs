@@ -32,7 +32,9 @@ namespace Blog_final_Asp.Models
         public virtual Comment ParentComm { get; set; }
         // Voir -> http://blogs.microsoft.co.il/gilf/2011/06/03/how-to-configure-a-self-referencing-entity-in-code-first/
         // Et -> https://stackoverflow.com/questions/11975727/mapping-a-self-join-to-a-collection-in-code-first-entity-framework-4-3
+        [ForeignKey("IDpost")]
         public virtual Post Post { get; set; }
+        [ForeignKey("IDuser")]
         public virtual User User { get; set; }
     }
 }

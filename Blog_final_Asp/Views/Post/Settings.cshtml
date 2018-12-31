@@ -49,7 +49,37 @@
 	<!-- Modification des auteurs (uniquement accessible pour les rôles modérateur et admin) -->
 	<div class="card">
 		<div class="card-content">
-			WIP auteurs
+			<!-- Ajouter un auteur -->
+			@using (Html.BeginForm("AddAutor", "Post"))
+			{
+				@Html.AntiForgeryToken()
+				@Html.HiddenFor(model => model.IDpost)
+				<div class="input-field">
+					@Html.DropDownListFor(model => model.IDauteur, new SelectList(Model.Auteurs, "IDuser", "Login"))
+				</div>
+				<button class="btn waves-effect waves-light light-blue" type="submit" name="action">
+					Ajouter l'auteur
+					<i class="material-icons right">done</i>
+				</button>
+			}
+			<hr />
+			<!-- On ne peut pas retirer d'auteur si il n'y en a plus qu'un -->
+			@if (Model.Writers.Count > 1)
+			{
+				<!-- Retirer un auteur -->
+				using (Html.BeginForm("DeleteAutor", "Post", FormMethod.Post, new { onsubmit = "return confirm('Voulez-vous vraiment supprimer ce billet ?');" }))
+				{
+					@Html.AntiForgeryToken()
+					@Html.HiddenFor(model => model.IDpost)
+					<div class="input-field">
+						@Html.DropDownListFor(model => model.IDauteur, new SelectList(Model.Writers, "IDuser", "Login"))
+					</div>
+					<button class="btn waves-effect waves-light red darken-2" type="submit" name="action">
+						Retirer l'auteur
+						<i class="material-icons right">done</i>
+					</button>
+				}
+			}
 		</div>
 	</div>
 
