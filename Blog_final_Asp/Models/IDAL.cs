@@ -35,6 +35,10 @@ namespace Blog_final_Asp.Models
         List<Post> GetPosts(int ToLoad, int PageNum);
         int GetPostsNumber();
         int AddPost(string Title, string Body, DateTime date_posted, string Picture = null, DateTime? date_modified = null);
+        bool UpdatePost(int IDpost, string Title, string Body, string Picture, DateTime Date_modified);
+        bool UpdatePost(int IDpost, string Title, string Body, DateTime Date_modified);
+        bool PostRemovePic(int IDpost);
+        bool DeletePost(int IDpost);
         // Autors
         Autor GetAutor(int ID);
         Autor GetAutor(string IDstr);

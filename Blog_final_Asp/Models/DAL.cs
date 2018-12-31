@@ -50,6 +50,18 @@ namespace Blog_final_Asp.Models
             return db.Users.FirstOrDefault(user => user.Login == Login && user.Password == Password);
         }
 
+        public bool DeletePost(int IDpost)
+        {
+            Post post = this.GetPost(IDpost);
+            if (post != null)
+            {
+                db.Posts.Remove(post);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public void Dispose()
         {
             db.Dispose();
@@ -208,6 +220,47 @@ namespace Blog_final_Asp.Models
                 users.Add(db.Users.Where(user => user.IDuser == autor.IDuser).FirstOrDefault());
             }
             return users;
+        }
+
+        public bool PostRemovePic(int IDpost)
+        {
+            Post post = this.GetPost(IDpost);
+            if (post != null)
+            {
+                post.Picture = null;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdatePost(int IDpost, string Title, string Body, string Picture, DateTime Date_modified)
+        {
+            Post post = this.GetPost(IDpost);
+            if (post != null)
+            {
+                post.Title = Title;
+                post.Body = Body;
+                post.Picture = Picture;
+                post.Date_modified = Date_modified;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdatePost(int IDpost, string Title, string Body, DateTime Date_modified)
+        {
+            Post post = this.GetPost(IDpost);
+            if (post != null)
+            {
+                post.Title = Title;
+                post.Body = Body;
+                post.Date_modified = Date_modified;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool UpdateUser(int IDuser, string Login, string Mail, string Password, int IDaccess_lvl, string Profile_pic)

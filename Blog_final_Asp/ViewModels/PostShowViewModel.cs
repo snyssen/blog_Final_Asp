@@ -25,6 +25,8 @@ namespace Blog_final_Asp.ViewModels
         public string Body { get; set; }
         public int? IDparentComm { get; set; }
 
-        public bool UserIsConnected { get; set; }
+        /* ===== Vérification d'identité ===== */
+        public int LoggedUserID { get; set; } // Sera à 0 si l'utilisateur n'est pas connecté
+        public string LoggedUserRole { get; set; }
     }
 }

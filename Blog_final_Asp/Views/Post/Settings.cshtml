@@ -1,0 +1,93 @@
+﻿@model Blog_final_Asp.ViewModels.PostSettingsViewModel
+@{
+	ViewBag.Title = "Paramètres du billet " + Model.IDpost;
+}
+
+<!-- Modification du contenu post-->
+<div class="card">
+	@if (Model.PostPic != null)
+	{
+		<div class="card-image">
+			<img src="@Url.Content("~/" + Model.PostPic)" />
+		</div>
+	}
+		<div class="card-content">
+			@using (Html.BeginForm("Settings", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+			{
+				@Html.AntiForgeryToken()
+				@Html.HiddenFor(model => model.LoggedUserID)
+				@Html.HiddenFor(model => model.LoggedUserRole)
+				@Html.HiddenFor(model => model.IDpost)
+
+				<div>
+					@Html.LabelFor(model => model.Title)
+					@Html.TextBoxFor(model => model.Title)
+					@Html.ValidationMessageFor(model => model.Title, "", new { @class = "red-text text-accent-4" })
+				</div>
+				<div class="input-field">
+					@Html.LabelFor(model => model.Body)
+					@Html.TextAreaFor(model => model.Body, new { @class = "materialize-textarea" })
+					@Html.ValidationMessageFor(model => model.Body, "", new { @class = "red-text text-accent-4" })
+				</div>
+				<div class="btn waves-effect waves-light light-blue ">
+					@Html.LabelFor(model => model.Picture, new { @class = "white-text" })
+					@Html.TextBoxFor(model => model.Picture, new { type = "file" })
+				</div>
+				<br />
+				@Html.ValidationMessageFor(model => model.Picture, "", new { @class = "red-text text-accent-4" })
+				<br />
+				<button class="btn waves-effect waves-light light-blue" type="submit" name="action">
+					Confirmer
+					<i class="material-icons right">send</i>
+				</button>
+			}
+		</div>
+</div>
+
+@if (Model.LoggedUserRole == "Moderateur" || Model.LoggedUserRole == "Admin")
+{
+	<!-- Modification des auteurs (uniquement accessible pour les rôles modérateur et admin) -->
+	<div class="card">
+		<div class="card-content">
+			WIP auteurs
+		</div>
+	</div>
+
+	<!-- Suppression d'éléments (uniquement accessible pour les rôles modérateur et admin) -->
+	<div class="card">
+		<div class="card-content">
+			<!-- Suppression photo -->
+			<div class="left-align">
+				@using (Html.BeginForm("DeletePic", "Post"))
+				{
+					@Html.AntiForgeryToken()
+					@Html.HiddenFor(model => model.IDpost)
+					<button class="btn waves-effect waves-light red darken-2" type="submit" name="action">
+						Supprimer la photo
+						<i class="material-icons right">warning</i>
+					</button>
+				}
+			</div>
+			<hr />
+			<!-- Suppression post -->
+			<div class="left-align">
+				@using (Html.BeginForm("DeletePost", "Post", FormMethod.Post, new { onsubmit = "return confirm('Voulez-vous vraiment supprimer ce billet ?');" }))
+				{
+					@Html.AntiForgeryToken()
+					@Html.HiddenFor(model => model.IDpost)
+					<button class="btn waves-effect waves-light red darken-2" type="submit" name="action">
+						Supprimer le billet
+						<i class="material-icons right">warning</i>
+					</button>
+				}
+			</div>
+		</div>
+	</div>
+}
+
+
+@section Scripts
+	{
+	@Scripts.Render("~/Scripts/jquery.validate-vsdoc.js")
+	@Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+}

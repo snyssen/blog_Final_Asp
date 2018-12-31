@@ -51,9 +51,20 @@
 	</div>
 </div>
 
+<!-- L'utilisateur peut modifier le billet si 1) il en est un des auteurs, 2) si il est modérateur ou admin -->
+@if (Model.Writers.Where(user => user.IDuser == Model.LoggedUserID).Count() > 0 || Model.LoggedUserRole == "Moderateur" || Model.LoggedUserRole == "Admin")
+{
+	<!-- Lien vers paramètres du billet -->
+<div>
+	<p>
+		Souhaitez-vous <a href="@Url.Action("Settings/" + Model.Post.IDpost)" class="waves-effect waves-light btn light-blue">Modifier<i class="material-icons left">edit</i></a> ce billet ?
+	</p>
+</div>
+}
+
 <!-- Ajout d'un commentaire -->
 <h4 style="text-decoration:underline">Commentaires</h4>
-@if (Model.UserIsConnected)
+@if (Model.LoggedUserID > 0)
 {
 	<h5>Ajouter un commentaire</h5>
 	using (Html.BeginForm("Show", "Post", FormMethod.Post))
@@ -95,7 +106,7 @@ else
 					@Html.Raw(comm.Body.Replace("<", @"&amp;lt;").Replace(">", @"&amp;gt;").Replace(Environment.NewLine, "<br />"))
 				</p>
 			</div>
-			@if (Model.UserIsConnected)
+			@if (Model.LoggedUserID > 0)
 			{
 				<div id="card-@comm.IDcomment" class="card-action">
 					<button class="btn waves-effect waves-light light-blue" id="@comm.IDcomment">
