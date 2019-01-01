@@ -62,6 +62,18 @@ namespace Blog_final_Asp.Models
             return false;
         }
 
+        public bool DeleteAutor(int IDuser, int IDpost)
+        {
+            Autor autor = db.Autors.FirstOrDefault(aut => aut.IDuser == IDuser && aut.IDpost == IDpost);
+            if (autor != null)
+            {
+                db.Autors.Remove(autor);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public bool DeletePost(int IDpost)
         {
             Post post = this.GetPost(IDpost);

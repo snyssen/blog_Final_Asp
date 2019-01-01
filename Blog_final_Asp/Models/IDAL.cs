@@ -47,6 +47,7 @@ namespace Blog_final_Asp.Models
         List<Autor> GetAutors();
         int AddAutor(int IDuser, int IDpost);
         bool DeleteAutor(int IDautor);
+        bool DeleteAutor(int IDuser, int IDpost);
 
         // Comments
         Comment GetComment(int ID);

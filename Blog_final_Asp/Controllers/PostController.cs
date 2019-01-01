@@ -202,7 +202,7 @@ namespace Blog_final_Asp.Controllers
         [Authorize(Roles = ("Admin,Moderateur"))]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddAutor(PostSettingsViewModel vm)
+        public ActionResult AddAutor(PostSettingsViewModel vm) // Ajout d'un collaborateur
         {
             IDAL dal = new DAL();
             dal.AddAutor(vm.IDpost, vm.IDauteur);
@@ -211,11 +211,12 @@ namespace Blog_final_Asp.Controllers
         [Authorize(Roles = ("Admin,Moderateur"))]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteAutor(PostSettingsViewModel vm)
+        public ActionResult DeleteAutor(PostSettingsViewModel vm) // Retrait d'un collaborateur
         {
             IDAL dal = new DAL();
-            dal.DeleteAutor(vm.IDauteur);
-            return RedirectToAction("Index", "Home");
+            if (dal.DeleteAutor(vm.IDauteur, vm.IDpost))
+                return RedirectToAction("Index", "Home");
+            return View("Error");
         }
     }
 }
