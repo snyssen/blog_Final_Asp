@@ -139,12 +139,9 @@ else
 {
 	<script>
 		$('#comments-wrapper').on('click', '.btn', function (el) { // On récupère le bouton qui a trigger l'événement
-			var CommData = {
-				IDpost: @Model.Post.IDpost,
-				IDparentComm: parseInt(el.target.id) // cast en int
-			};
+			
 			$.ajax({
-				url: "@Url.Action("GetResForm")" + "?IDpost=" + @Model.Post.IDpost + "&IDparentComm=" + el.target.id,
+				url: "@Url.Action("GetResForm")" + "?IDpost=" + @Model.Post.IDpost + "&IDparentComm=" + Number(el.target.id),
 				cache: false,
 				type: "GET",
 				dataType: "html",

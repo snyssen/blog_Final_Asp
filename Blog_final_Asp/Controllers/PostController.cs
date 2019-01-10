@@ -92,6 +92,7 @@ namespace Blog_final_Asp.Controllers
             if (ModelState.IsValid)
             {
                 dal.AddComment(vm.Title, vm.Body, DateTime.Now, int.Parse(HttpContext.User.Identity.Name), vm.Post.IDpost, vm.IDparentComm);
+                return RedirectToAction("Show/" + vm.Post.IDpost); // Redirection pour vider le ViewModel et charger le nouveau commentaire
             }
             return View(vm);
         }
